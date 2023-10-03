@@ -10,27 +10,20 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: replacetokens@4
+
+- task: FileTransform@1
   displayName: 'Replace tokens in appsettings.json'
   inputs:
-    rootDirectory: '$(build.sourcesdirectory)/src/MyHealth.Web'
-    targetFiles: appsettings.json
-    escapeType: none
-
-- task: replacetokens@3
-  displayName: 'Replace tokens in mhc-aks.yaml'
-  inputs:
-    targetFiles: 'mhc-aks.yaml'
-    escapeType: none
-    tokenPrefix: '__'
-    tokenSuffix: '__'
+    folderPath: '$(build.sourcesdirectory)/src/MyHealth.Web'
+    fileType: 'json'
+    targetFiles: 'appsettings.json'
 
 - task: DockerCompose@0
   displayName: 'Run services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'ARM'
-    azureContainerRegistry: 'dockerreg0912.azurecr.io'
+    azureSubscription: 'Free Trial(eb33151c-97b2-47a9-9685-fc5d80b4fc4a)'
+    azureContainerRegistry: '{"loginServer":"mytestacr2023.azurecr.io", "id" : "/subscriptions/eb33151c-97b2-47a9-9685-fc5d80b4fc4a/resourceGroups/akstestrg/providers/Microsoft.ContainerRegistry/registries/mytestacr2023"}'
     dockerComposeFile: 'docker-compose.ci.build.yml'
     action: 'Run services'
     detached: false
@@ -39,8 +32,8 @@ steps:
   displayName: 'Build services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'ARM'
-    azureContainerRegistry: 'dockerreg0912.azurecr.io'
+    azureSubscription: 'Free Trial(eb33151c-97b2-47a9-9685-fc5d80b4fc4a)'
+    azureContainerRegistry: '{"loginServer":"mytestacr2023.azurecr.io", "id" : "/subscriptions/eb33151c-97b2-47a9-9685-fc5d80b4fc4a/resourceGroups/akstestrg/providers/Microsoft.ContainerRegistry/registries/mytestacr2023"}'
     dockerComposeFile: 'docker-compose.yml'
     dockerComposeFileArgs: 'DOCKER_BUILD_SOURCE='
     action: 'Build services'
@@ -50,8 +43,8 @@ steps:
   displayName: 'Push services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'ARM'
-    azureContainerRegistry: 'dockerreg0912.azurecr.io'
+    azureSubscription: 'Free Trial(eb33151c-97b2-47a9-9685-fc5d80b4fc4a)'
+    azureContainerRegistry: '{"loginServer":"mytestacr2023.azurecr.io", "id" : "/subscriptions/eb33151c-97b2-47a9-9685-fc5d80b4fc4a/resourceGroups/akstestrg/providers/Microsoft.ContainerRegistry/registries/mytestacr2023"}'
     dockerComposeFile: 'docker-compose.yml'
     dockerComposeFileArgs: 'DOCKER_BUILD_SOURCE='
     action: 'Push services'
@@ -61,8 +54,8 @@ steps:
   displayName: 'Lock services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'ARM'
-    azureContainerRegistry: 'dockerreg0912.azurecr.io'
+    azureSubscription: 'Free Trial(eb33151c-97b2-47a9-9685-fc5d80b4fc4a)'
+    azureContainerRegistry: '{"loginServer":"mytestacr2023.azurecr.io", "id" : "/subscriptions/eb33151c-97b2-47a9-9685-fc5d80b4fc4a/resourceGroups/akstestrg/providers/Microsoft.ContainerRegistry/registries/mytestacr2023"}'
     dockerComposeFile: 'docker-compose.yml'
     dockerComposeFileArgs: 'DOCKER_BUILD_SOURCE='
     action: 'Lock services'
