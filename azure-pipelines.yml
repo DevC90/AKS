@@ -61,6 +61,7 @@ steps:
     action: 'Lock services'
     outputDockerComposeFile: '$(Build.StagingDirectory)/docker-compose.yml'
 
+
 - task: CopyFiles@2
   displayName: 'Copy Files'
   inputs:
